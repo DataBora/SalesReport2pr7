@@ -65,15 +65,11 @@ colour = st.sidebar.multiselect(
     default=df["COLOUR"].unique()
 )
 
-df_selection = df.query(
-    "WH == @wh & YEAR == @year & MONTH == @month & COLOUR == @colour"
-)
+df_selection = df.query("WH == @wh & YEAR == @year & MONTH == @month & COLOUR == @colour")
+
+
 
 # In[7]:
-
-
-
-# In[8]:
 
 
 # ---- MAINPAGE ----
@@ -81,25 +77,28 @@ st.title(":bar_chart: Sales Dashboard")
 st.markdown("##")
 
 
-# In[9]:
+# In[8]:
 
 
 # TOP KPI's
-total_sales = int(df_selection["REVENUE"].sum())
-average_sale_by_transaction = round(df_selection["REVENUE"].mean(), 2)
+st.title(":bar_chart: Sales Dashboard")
+st.markdown("##")
 
-left_column, right_column = st.columns(2)
+total_sales=int(df_selection["REVENUE"].sum())
+average_sale_by_transaction=round(df_selection["REVENUE"].mean(), 2)
+
+left_column, right_column=st.columns(2)
 with left_column:
-    st.subheader("Total Sales:")
-    st.subheader(f"US $ {total_sales:,}")
+        st.subheader("Total Sales:")
+        st.subheader(f"US $ {total_sales:,}")
 with right_column:
-    st.subheader("Average Sales Per Transaction:")
-    st.subheader(f"US $ {average_sale_by_transaction}")
-
+        st.subheader("Average Sales Per Transaction:")
+        st.subheader(f"US $ {average_sale_by_transaction}")
 st.markdown("""---""")
 
 
-# In[10]:
+
+# In[9]:
 
 
 # SALES BY THE COLOUR LINE [BAR CHART]
@@ -108,7 +107,7 @@ sales_by_colour_line = (
 )
 
 
-# In[11]:
+# In[10]:
 
 
 fig_colour_sales = px.bar(
@@ -126,7 +125,7 @@ fig_colour_sales.update_layout(
 )
 
 
-# In[12]:
+# In[11]:
 
 
 # SALES BY DAY [BAR CHART]
@@ -146,7 +145,7 @@ fig_daily_sales.update_layout(
 )
 
 
-# In[13]:
+# In[12]:
 
 
 #left_column, right_column = st.columns(2)
@@ -154,14 +153,14 @@ fig_daily_sales.update_layout(
 #right_column.plotly_chart(fig_colour_sales, use_container_width=True)
 
 
-# In[14]:
+# In[13]:
 
 
 st.plotly_chart(fig_daily_sales)
 st.plotly_chart(fig_colour_sales)
 
 
-# In[15]:
+# In[14]:
 
 
 # ---- HIDE STREAMLIT STYLE ----
