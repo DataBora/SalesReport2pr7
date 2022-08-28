@@ -127,7 +127,7 @@ fig_colour_sales = px.bar(
     x="REVENUE",
     y=sales_by_colour_line.index,
     orientation="h",
-    title="<b>Sales by Colour Line</b>",
+    title="<b>Sales by Paint Colour</b>",
     color_discrete_sequence=["#E694FF"] * len(sales_by_colour_line),
     template="plotly_white",
 )
