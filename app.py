@@ -34,8 +34,6 @@ df = pd.read_excel('Sales.xlsx')
 
 # In[5]:
 
-YEAR = df['YEAR'].unique().tolist()
-MONTH = df['MONTH'].unique().tolist()
 
 # In[6]:
 
