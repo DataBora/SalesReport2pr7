@@ -62,8 +62,12 @@ colour = st.sidebar.multiselect(
 )
 
 df_selection = df.query(
-    "WH == @wh & YEAR ==@year & MONTH ==@month & COLOUR == @colour"
+    "WH == @wh & COLOUR == @colour"
 )
+
+mask= (df['YEAR'].between(*year)) & (df['MONTH'].between(*month)) 
+number_of_result=df[mask].shape[0]
+st.markdown(f'*Available Results: {number_of_result}*')
 
 
 # In[6]:
