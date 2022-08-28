@@ -34,6 +34,10 @@ df = pd.read_excel('Sales.xlsx')
 
 # In[5]:
 
+YEAR = df['YEAR'].unique().tolist()
+MONTH = df['MONTH'].unique().tolist()
+
+# In[6]:
 
 # ---- SIDEBAR ----
 st.sidebar.header("Please Filter Here:")
@@ -65,12 +69,22 @@ df_selection = df.query(
     "WH == @wh & COLOUR == @colour"
 )
 
+# In[7]:
+
 mask= (df['YEAR'].between(*year)) & (df['MONTH'].between(*month)) 
 number_of_result=df[mask].shape[0]
 st.markdown(f'*Available Results: {number_of_result}*')
 
+df_grouped=df[mask].groupby('YEAR').REVENUE.sum()
+df_grouped=df_grouped.reset_index()
+# GROUP1 DATAFRAME AFTER SELECTION
+df_grouped1=df[mask].groupby('WH').REVENUE.sum()
+df_grouped1=df_grouped1.reset_index()
+# GROUP2 DATAFRAME AFTER SELECTION
+df_grouped2=df[mask].groupby('MONTH').REVENUE.sum()
+df_grouped2=df_grouped2.reset_index()
 
-# In[6]:
+# In[8]:
 
 
 # ---- MAINPAGE ----
@@ -78,7 +92,7 @@ st.title(":bar_chart: Sales Dashboard")
 st.markdown("##")
 
 
-# In[7]:
+# In[9]:
 
 
 # TOP KPI's
@@ -96,7 +110,7 @@ with right_column:
 st.markdown("""---""")
 
 
-# In[8]:
+# In[10]:
 
 
 # SALES BY THE COLOUR LINE [BAR CHART]
@@ -105,7 +119,7 @@ sales_by_colour_line = (
 )
 
 
-# In[9]:
+# In[11]:
 
 
 fig_colour_sales = px.bar(
@@ -123,7 +137,7 @@ fig_colour_sales.update_layout(
 )
 
 
-# In[10]:
+# In[12]:
 
 
 # SALES BY DAY [BAR CHART]
@@ -143,7 +157,7 @@ fig_daily_sales.update_layout(
 )
 
 
-# In[11]:
+# In[13]:
 
 
 #left_column, right_column = st.columns(2)
@@ -151,14 +165,14 @@ fig_daily_sales.update_layout(
 #right_column.plotly_chart(fig_colour_sales, use_container_width=True)
 
 
-# In[12]:
+# In[14]:
 
 
 st.plotly_chart(fig_daily_sales)
 st.plotly_chart(fig_colour_sales)
 
 
-# In[13]:
+# In[15]:
 
 
 # ---- HIDE STREAMLIT STYLE ----
