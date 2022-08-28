@@ -34,6 +34,8 @@ df = pd.read_excel('Sales.xlsx')
 
 # In[5]:
 
+YEAR = df['YEAR'].unique().tolist()
+MONTH = df['MONTH'].unique().tolist()
 
 # In[6]:
 
@@ -63,19 +65,38 @@ colour = st.sidebar.multiselect(
     default=df["COLOUR"].unique()
 )
 
-df_selection = df.query("WH == @wh & YEAR == @year & MONTH == @month & COLOUR == @colour")
-
+df_selection = df.query(
+        "WH == @wh & YEAR == @year & MONTH == @month & COLOUR == @colour"
+)
 
 
 # In[7]:
 
+mask = (df['YEAR'].between(*year)) & (df['MONTH'].between(*month)) & (df['WH'].isin(wh)) & (df['COLOUR'].isin(colour))
+number_of_result=df[mask].shape[0]
+st.markdown(f'*Available Results: {number_of_result}*')
+
+# GROUP DATAFRAME AFTER SELECTION
+df_grouped=df[mask].groupby('YEAR').REVENUE.sum()
+df_grouped=df_grouped.reset_index()
+# GROUP DATAFRAME AFTER SELECTION
+df_grouped1=df[mask].groupby('WH').REVENUE.sum()
+df_grouped1=df_grouped1.reset_index()
+# GROUP DATAFRAME AFTER SELECTION
+df_grouped2=df[mask].groupby('MONTH').REVENUE.sum()
+df_grouped2=df_grouped2.reset_index()
+# GROUP DATAFRAME AFTER SELECTION
+df_grouped2=df[mask].groupby('COLOUR').REVENUE.sum()
+df_grouped2=df_grouped2.reset_index()
+
+# In[8]:
 
 # ---- MAINPAGE ----
 st.title(":bar_chart: Sales Dashboard")
 st.markdown("##")
 
 
-# In[8]:
+# In[9]:
 
 
 # TOP KPI's
@@ -85,18 +106,19 @@ st.markdown("##")
 total_sales=int(df_selection["REVENUE"].sum())
 average_sale_by_transaction=round(df_selection["REVENUE"].mean(), 2)
 
-left_column, right_column=st.columns(2)
+left_column, right_column = st.columns(2)
 with left_column:
-        st.subheader("Total Sales:")
-        st.subheader(f"US $ {total_sales:,}")
+    st.subheader("Total Sales:")
+    st.subheader(f"US $ {total_sales:,}")
 with right_column:
-        st.subheader("Average Sales Per Transaction:")
-        st.subheader(f"US $ {average_sale_by_transaction}")
+    st.subheader("Average Sales Per Transaction:")
+    st.subheader(f"US $ {average_sale_by_transaction}")
+
 st.markdown("""---""")
 
 
 
-# In[9]:
+# In[10]:
 
 
 # SALES BY THE COLOUR LINE [BAR CHART]
@@ -105,7 +127,7 @@ sales_by_colour_line = (
 )
 
 
-# In[10]:
+# In[11]:
 
 
 fig_colour_sales = px.bar(
@@ -123,7 +145,7 @@ fig_colour_sales.update_layout(
 )
 
 
-# In[11]:
+# In[12]:
 
 
 # SALES BY DAY [BAR CHART]
@@ -143,7 +165,7 @@ fig_daily_sales.update_layout(
 )
 
 
-# In[12]:
+# In[13]:
 
 
 #left_column, right_column = st.columns(2)
@@ -151,14 +173,14 @@ fig_daily_sales.update_layout(
 #right_column.plotly_chart(fig_colour_sales, use_container_width=True)
 
 
-# In[13]:
+# In[14]:
 
 
 st.plotly_chart(fig_daily_sales)
 st.plotly_chart(fig_colour_sales)
 
 
-# In[14]:
+# In[15]:
 
 
 # ---- HIDE STREAMLIT STYLE ----
