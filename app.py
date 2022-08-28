@@ -66,7 +66,7 @@ colour = st.sidebar.multiselect(
 )
 
 df_selection = df.query(
-    "WH == @wh & COLOUR == @colour"
+    "WH == @wh & YEAR == @year & MONTH == @month & COLOUR == @colour"
 )
 
 # In[7]:
