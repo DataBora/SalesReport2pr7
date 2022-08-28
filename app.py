@@ -49,11 +49,15 @@ wh = st.sidebar.multiselect(
 
 year = st.sidebar.slider(
     "Select the Year:",
-    options=df["YEAR"].unique(),default=df["YEAR"].unique(),)
+    min_value=min(YEAR),
+    max_value=max(YEAR),
+    value=(min(YEAR),max(YEAR)))
 
 month = st.sidebar.slider(
         "Select the Month:",
-        options=df["MONTH"].unique(),default=df["MONTH"].unique(),)
+        min_value=min(MONTH),
+        max_value=max(MONTH),
+        value=(min(MONTH),max(MONTH)))
 
 colour = st.sidebar.multiselect(
     "Select the Colour:",
