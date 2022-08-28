@@ -71,17 +71,20 @@ df_selection = df.query(
 
 # In[7]:
 
-mask= (df['YEAR'].between(*year)) & (df['MONTH'].between(*month)) 
+mask = (df['YEAR'].between(*year)) & (df['MONTH'].between(*month)) & (df['WH'].isin(wh)) & (df['COLOUR'].isin(colour))
 number_of_result=df[mask].shape[0]
 st.markdown(f'*Available Results: {number_of_result}*')
 
 df_grouped=df[mask].groupby('YEAR').REVENUE.sum()
 df_grouped=df_grouped.reset_index()
-# GROUP1 DATAFRAME AFTER SELECTION
+# GROUP DATAFRAME AFTER SELECTION
 df_grouped1=df[mask].groupby('WH').REVENUE.sum()
 df_grouped1=df_grouped1.reset_index()
-# GROUP2 DATAFRAME AFTER SELECTION
+# GROUP DATAFRAME AFTER SELECTION
 df_grouped2=df[mask].groupby('MONTH').REVENUE.sum()
+df_grouped2=df_grouped2.reset_index()
+# GROUP DATAFRAME AFTER SELECTION
+df_grouped2=df[mask].groupby('COLOUR').REVENUE.sum()
 df_grouped2=df_grouped2.reset_index()
 
 # In[8]:
