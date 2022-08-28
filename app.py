@@ -47,14 +47,14 @@ year = st.sidebar.slider(
     "Select the Year:",
     min_value=min(YEAR),
     max_value=max(YEAR),
-    value=(min(YEAR),max(YEAR)))
+    value=(min(YEAR),max(YEAR))
 )
 
 month = st.sidebar.slider(
         "Select the Month:",
         min_value=min(MONTH),
         max_value=max(MONTH),
-        value=(min(MONTH),max(MONTH)))
+        value=(min(MONTH),max(MONTH))
 )
 
 
