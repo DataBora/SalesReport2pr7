@@ -49,15 +49,11 @@ wh = st.sidebar.multiselect(
 
 year = st.sidebar.slider(
     "Select the Year:",
-    min_value=min(YEAR),
-    max_value=max(YEAR),
-    value=(min(YEAR),max(YEAR)))
+    options=df["YEAR"].unique(),default=df["YEAR"].unique(),)
 
 month = st.sidebar.slider(
         "Select the Month:",
-        min_value=min(MONTH),
-        max_value=max(MONTH),
-        value=(min(MONTH),max(MONTH)))
+        options=df["MONTH"].unique(),default=df["MONTH"].unique(),)
 
 colour = st.sidebar.multiselect(
     "Select the Colour:",
@@ -71,21 +67,7 @@ df_selection = df.query(
 
 # In[7]:
 
-mask = (df['YEAR'].between(*year)) & (df['MONTH'].between(*month)) & (df['WH'].isin(wh)) & (df['COLOUR'].isin(colour))
-number_of_result=df[mask].shape[0]
-st.markdown(f'*Available Results: {number_of_result}*')
 
-df_grouped=df[mask].groupby('YEAR').REVENUE.sum()
-df_grouped=df_grouped.reset_index()
-# GROUP DATAFRAME AFTER SELECTION
-df_grouped1=df[mask].groupby('WH').REVENUE.sum()
-df_grouped1=df_grouped1.reset_index()
-# GROUP DATAFRAME AFTER SELECTION
-df_grouped2=df[mask].groupby('MONTH').REVENUE.sum()
-df_grouped2=df_grouped2.reset_index()
-# GROUP DATAFRAME AFTER SELECTION
-df_grouped2=df[mask].groupby('COLOUR').REVENUE.sum()
-df_grouped2=df_grouped2.reset_index()
 
 # In[8]:
 
